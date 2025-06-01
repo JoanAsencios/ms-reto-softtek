@@ -1,0 +1,290 @@
+openapi: 3.0.4
+info:
+  title: ms-reto-tecnico-softtek
+  description: API para reto tecnico
+  contact:
+    name: Joan Asencios
+    email: joan.asencios95@gmail.com
+  version: 1.0.0
+servers:
+  - url: https://localhost:9091/api/v1
+    description: Local environment
+  - url: https://api.reto.softtek.com/v1
+    description: Production environment
+paths:
+  /estudiantes:
+    get:
+      summary: Obtener todos los estudiantes
+      tags:
+        - estudiante-controller
+      operationId: getAllEstudiantes
+      description: |-
+        # Descripción del Endpoint
+        API de Estudiante para obetener lista con todos los estudiantes.
+
+        ## Respuestas HTTP
+        | Código | Descripción               |
+        |--------|---------------------------|
+        | 200    | Datos obtenidos correctamente. |
+        | 400    | Parámetro o Cuerpo incorrecto.     |
+        | 404    | Recurso no encontrado.    |
+        | 500    | Error interno del servidor.     |
+        
+      responses:
+        "200":
+          description: Lista de estudiantes obtenida con exito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Estudiante"
+        "400":
+          description: Solicitud incorrecta, datos invalidos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: No se encontraron estudiantes
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      summary: Registrar un nuevo estudiante
+      tags:
+        - estudiante-controller
+      operationId: createEstudiante
+      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EstudianteRequest"
+              
+      responses:
+        "201":
+          description: Estudiante registrado con exito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Estudiante"
+        "400":
+          description: Solicitud incorrecta, datos invalidos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicto, el estudiante ya existe
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
+  /estudiantes/{idEstudiante}:
+    get:
+      summary: Obtener estudiante por ID
+      tags:
+        - estudiante-controller
+      operationId: getEstudiante
+      parameters:
+        - name: idEstudiante
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Estudiante obtenido con exito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Estudiante"
+        "400":
+          description: Parametro incorrecto
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Estudiante no econtrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      summary: Actualizar la informacion de un estudiante
+      tags:
+        - estudiante-controller
+      operationId: updateEstudiante
+      parameters:
+        - name: idEstudiante
+          in: path
+          required: true
+          schema:
+            type: integer
+            
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EstudianteRequest"
+              
+      responses:
+        "200":
+          description: Estudiante actualizado con exito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Estudiante"
+        "400":
+          description: Solicitud incorrecta, datos invalidos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: No se econtró estudiante
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"                
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      summary: Eliminar un estudiante
+      tags:
+        - estudiante-controller
+      operationId: deleteEstudiante
+      parameters:
+        - name: idEstudiante
+          in: path
+          required: true
+          schema:
+            type: integer
+      
+      responses:
+        "204":
+          description: No content - Estudiante eliminado exitosamente
+        "400":
+          description: Solicitud incorrecta, datos invalidos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: No se encontro estudiante
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
+components:
+  schemas:
+    Estudiante:
+      type: object
+      properties: 
+        id: 
+          type: integer
+          example: "12345678"
+        nombre:
+          type: string
+          example: "Joan"
+        apellido:
+          type: string
+          example: "Asencios"
+        email:
+          type: string
+          example: "joan.asencios95@gmail.com"
+        creditos:
+          type: integer
+          example: 20
+        semestre:
+          type: integer
+          example: 4
+        promedio:
+          type: integer
+          example: 20
+      required:
+        - id
+        - nombre
+        - apellido
+        - email
+        - creditos
+        - semestre
+        - promedio
+    
+    EstudianteRequest:
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: "Joan"
+        apellido:
+          type: string
+          example: "Asencios"
+        email:
+          type: string
+          example: "joan.asencios95@gmail.com"
+        creditos:
+          type: integer
+          example: 20
+        semestre:
+          type: integer
+          example: 4
+        promedio:
+          type: integer
+          example: 20
+      required:
+        - nombre
+        - apellido
+        - email
+        - creditos
+        - semestre
+        - promedio
+        
+    ErrorResponse:
+      type: object
+      properties:
+        tipo:
+          type: string
+          example: "SISTEMA"
+        codigo:
+          type: string
+          example: "ERR-001"
+        mensaje:
+          type: string
+          example: "Solicitud incorrecta, revise los parametros enviados"
+    
