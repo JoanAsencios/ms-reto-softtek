@@ -1,0 +1,102 @@
+-- CASO 1: Crear un script para la creación e insertado para la tabla EVAL_TIP_GESTION.
+
+-- Crear la tabla EVAL_TIP_GESTION
+CREATE TABLE EVAL_TIP_GESTION (
+    N_ID_TIPO_GESTION NUMBER PRIMARY KEY,
+    C_DESCRIPCION VARCHAR2(50),
+    N_PESO NUMBER,
+    N_ESTADO NUMBER,
+    C_USU_REGISTRO VARCHAR2(20),
+    D_FEC_REGISTRO TIMESTAMP
+);
+
+-- Insertar datos en la tabla EVAL_TIP_GESTION
+INSERT INTO EVAL_TIP_GESTION (N_ID_TIPO_GESTION, C_DESCRIPCION, N_PESO, N_ESTADO, C_USU_REGISTRO, D_FEC_REGISTRO)
+VALUES (1, 'Gestion Visa', 60, 1, 'GNOAIN', TO_TIMESTAMP('19/11/2018 21:19:00', 'DD/MM/YYYY HH24:MI:SS'));
+
+INSERT INTO EVAL_TIP_GESTION (N_ID_TIPO_GESTION, C_DESCRIPCION, N_PESO, N_ESTADO, C_USU_REGISTRO, D_FEC_REGISTRO)
+VALUES (2, 'Gestion MC', 50, 1, 'GNOAIN', TO_TIMESTAMP('19/11/2018 21:19:00', 'DD/MM/YYYY HH24:MI:SS'));
+
+INSERT INTO EVAL_TIP_GESTION (N_ID_TIPO_GESTION, C_DESCRIPCION, N_PESO, N_ESTADO, C_USU_REGISTRO, D_FEC_REGISTRO)
+VALUES (3, 'Contracargo Visa', 0, 1, 'GNOAIN', TO_TIMESTAMP('19/11/2018 21:19:00', 'DD/MM/YYYY HH24:MI:SS'));
+
+INSERT INTO EVAL_TIP_GESTION (N_ID_TIPO_GESTION, C_DESCRIPCION, N_PESO, N_ESTADO, C_USU_REGISTRO, D_FEC_REGISTRO)
+VALUES (4, 'Contracargo MC', 0, 1, 'GNOAIN', TO_TIMESTAMP('19/11/2018 21:19:00', 'DD/MM/YYYY HH24:MI:SS'));
+
+-- Confirmar los cambios
+COMMIT;
+
+
+
+-- CASO 2: Crear script para la creación e insertado para la tabla EVAL_REQ_DETALLE
+-- Crear la tabla EVAL_REQ_DETALLE
+CREATE TABLE EVAL_REQ_DETALLE (
+    N_ID_REQ_DETALLE NUMBER PRIMARY KEY,
+    N_ID_RQ NUMBER,
+    C_COD_AUTORIZACION VARCHAR2(20),
+    D_FEC_TRX TIMESTAMP,
+    N_MTO NUMBER,
+    C_USU_REGISTRO VARCHAR2(20),
+    D_FEC_REGISTRO TIMESTAMP,
+    N_ID_TIPO_GESTION NUMBER,
+    D_FEC_GESTION TIMESTAMP
+);
+
+-- Insertar datos en la tabla EVAL_REQ_DETALLE
+INSERT INTO EVAL_REQ_DETALLE (N_ID_REQ_DETALLE, N_ID_RQ, C_COD_AUTORIZACION, D_FEC_TRX, N_MTO, C_USU_REGISTRO, D_FEC_REGISTRO, N_ID_TIPO_GESTION, D_FEC_GESTION)
+VALUES (1, 1000, '2793862', TO_TIMESTAMP('26/05/2024 14:30', 'DD/MM/YYYY HH24:MI'), 600, 'SISTEMA', TO_TIMESTAMP('06/06/2024 01:20:57', 'DD/MM/YYYY HH24:MI:SS'), 1, TO_TIMESTAMP('06/06/2024 01:21:18', 'DD/MM/YYYY HH24:MI:SS'));
+
+INSERT INTO EVAL_REQ_DETALLE (N_ID_REQ_DETALLE, N_ID_RQ, C_COD_AUTORIZACION, D_FEC_TRX, N_MTO, C_USU_REGISTRO, D_FEC_REGISTRO, N_ID_TIPO_GESTION, D_FEC_GESTION)
+VALUES (2, 1001, '2793863', TO_TIMESTAMP('26/05/2024 14:30', 'DD/MM/YYYY HH24:MI'), 1000, 'SISTEMA', TO_TIMESTAMP('06/06/2024 01:21:18', 'DD/MM/YYYY HH24:MI:SS'), 1, TO_TIMESTAMP('06/06/2024 01:21:18', 'DD/MM/YYYY HH24:MI:SS'));
+
+INSERT INTO EVAL_REQ_DETALLE (N_ID_REQ_DETALLE, N_ID_RQ, C_COD_AUTORIZACION, D_FEC_TRX, N_MTO, C_USU_REGISTRO, D_FEC_REGISTRO, N_ID_TIPO_GESTION, D_FEC_GESTION)
+VALUES (3, 1002, '2793890', TO_TIMESTAMP('07/05/2024 15:10', 'DD/MM/YYYY HH24:MI'), 1000, 'SISTEMA', TO_TIMESTAMP('06/06/2024 01:21:52', 'DD/MM/YYYY HH24:MI:SS'), 1, TO_TIMESTAMP('06/06/2024 01:21:52', 'DD/MM/YYYY HH24:MI:SS'));
+
+INSERT INTO EVAL_REQ_DETALLE (N_ID_REQ_DETALLE, N_ID_RQ, C_COD_AUTORIZACION, D_FEC_TRX, N_MTO, C_USU_REGISTRO, D_FEC_REGISTRO, N_ID_TIPO_GESTION, D_FEC_GESTION)
+VALUES (4, 1003, '2793890', TO_TIMESTAMP('18/05/2024 27:10', 'DD/MM/YYYY HH24:MI'), 1000, 'SISTEMA', TO_TIMESTAMP('06/06/2024 01:21:55', 'DD/MM/YYYY HH24:MI:SS'), 1, TO_TIMESTAMP('06/06/2024 01:21:55', 'DD/MM/YYYY HH24:MI:SS'));
+
+INSERT INTO EVAL_REQ_DETALLE (N_ID_REQ_DETALLE, N_ID_RQ, C_COD_AUTORIZACION, D_FEC_TRX, N_MTO, C_USU_REGISTRO, D_FEC_REGISTRO, N_ID_TIPO_GESTION, D_FEC_GESTION)
+VALUES (5, 1004, '2793890', TO_TIMESTAMP('20/04/2024 35:30', 'DD/MM/YYYY HH24:MI'), 1000, 'SISTEMA', TO_TIMESTAMP('06/06/2024 01:21:58', 'DD/MM/YYYY HH24:MI:SS'), 1, TO_TIMESTAMP('06/06/2024 01:21:58', 'DD/MM/YYYY HH24:MI:SS'));
+
+-- Confirmar los cambios
+COMMIT;
+
+
+-- CASO 3: - Crear un Procedimiento almacenado dentro de un paquete (Package) con la siguiente funcionalidad:
+/*Nombre del package: PKG_EVAL_ASIGNACION
+• Crear un cursor que evalue los registros de la tabla EVAL_REQ_DETALLE para asignar el
+tipo de gestion que le corresponde según los siguientes criterios:
+o Si el campo n_mto es menor o igual a 10 asignar tipo de gestión 6
+o Si el campo n_mto es mayor a 10 y menor o igual a 35 asignar tipo de gestión 5
+o Si el campo n_mto es mayor a 35 y menor o igual 100 asignar tipo de gestión 4
+o Si el campo n_mto es mayor a 100 asignar tipo de gestión 3
+Al asignar un tipo de gestión debe actualizar los campos n_id_tipo_gestion,
+d_fec_gestion. El valor para campo d_fec_gestion es la fecha de hoy, para el
+campo n_id_tipo_gestion le corresponde el valor de acuerdo a los criterios
+descritos anteriormente con el campo n_mto */
+
+CREATE OR REPLACE PROCEDURE PKG_EVAL_ASIGNACION.ASIGNAR_TIPO_GESTION
+AS
+BEGIN
+    -- Actualizar registros en EVAL_REQ_DETALLE según los criterios dados
+    UPDATE EVAL_REQ_DETALLE
+    SET
+        n_id_tipo_gestion = CASE
+            WHEN n_mto < 10 THEN 6
+            WHEN n_mto >= 10 AND n_mto < 35 THEN 5
+            WHEN n_mto >= 35 AND n_mto <= 100 THEN 4
+            WHEN n_mto > 100 THEN 3
+        END,
+        d_fec_gestion = SYSTIMESTAMP
+    WHERE
+        n_id_tipo_gestion IS NULL; 
+
+    COMMIT;
+
+    DBMS_OUTPUT.PUT_LINE('Asignación de tipos de gestión completada.');
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error al asignar tipos de gestión: ' || SQLERRM);
+        ROLLBACK;
+END ASIGNAR_TIPO_GESTION;
+/
